@@ -1,0 +1,25 @@
+{
+  "name": "edufied-task",
+  "version": "1.0.0",
+  "description": "A contract (vesting + token) with a token (XYZ token, 18 decimal ) supply of 100 Million. Admin/token deployer can enter upto ten addresses where the token will disperse evenly for 12 months. Token release schedule will be per min.",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nerdjango/edufied-task.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nerdjango/edufied-task/issues"
+  },
+  "homepage": "https://github.com/nerdjango/edufied-task#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.4.2"
+  }
+}
