@@ -7,10 +7,8 @@ import "./OZ/VestingWalletUpdated.sol"; // VestingWallet adapted for multiple be
 contract TokenVesting is VestingWalletUpdated {
     constructor(
         address _tokenAddress,
-        address[] memory beneficiariesAddress, 
-        uint64 startTimestamp,
-        uint64 durationSeconds
-        ) VestingWalletUpdated(beneficiariesAddress, startTimestamp, durationSeconds) {
+        address[] memory beneficiariesAddress
+        ) VestingWalletUpdated(beneficiariesAddress, uint64(block.timestamp), uint64(365 days)) {
         require(_tokenAddress != address(0));
         TokenAddress = _tokenAddress;
     }
