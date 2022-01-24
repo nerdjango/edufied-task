@@ -82,7 +82,7 @@ contract VestingWalletUpdated is Context, Ownable, Pausable {
      *
      * Emits a {TokensReleased} event.
      */
-    function release(address token) public virtual onlyOwner whenNotPaused {
+    function _release(address token) internal virtual {
         uint256 releasable = vestedAmount(token, uint64(block.timestamp)) - released(token);
         _erc20Released[token] += releasable;
         uint256 amountPerUser = releasable/_beneficiaries.length;

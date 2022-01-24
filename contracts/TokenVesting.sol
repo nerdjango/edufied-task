@@ -15,4 +15,12 @@ contract TokenVesting is VestingWalletUpdated {
         TokenAddress = _tokenAddress;
     }
     address public TokenAddress;
+    uint scheduleTime = 1 minutes;
+    uint32 nextReleaseTime;
+
+    function release() external onlyOwner whenNotPaused {
+        require(uint32(block.timestamp)>=nextReleaseTime, "TokenVesting: After 1 minute you'll be allowed to release more tokens");
+        _release(TokenAddress);
+        nextReleaseTime = uint32(block.timestamp + scheduleTime);
+    }
 }
