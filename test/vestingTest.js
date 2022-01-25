@@ -45,6 +45,10 @@ contract("Vesting", accounts => {
         await truffleAssert.reverts(wallet.release({ from: accounts[1] })) // user not owner
 
         await timeTravel(60); // travel 1 minute ahead (works with ganache)
-        truffleAssert.passes(await wallet.release({ from: accounts[0] }))
+        await truffleAssert.passes(wallet.release({ from: accounts[0] }))
+        await timeTravel(10); // travel 10 seconds
+        await truffleAssert.reverts(wallet.release({ from: accounts[0] }))
+        await timeTravel(60); // travel 50 seconds to complete 1 minute
+        await truffleAssert.passes(wallet.release({ from: accounts[0] }))
     })
 })
