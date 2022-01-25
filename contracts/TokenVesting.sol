@@ -18,7 +18,9 @@ contract TokenVesting is VestingWalletUpdated {
 
     function release() external onlyOwner whenNotPaused {
         if (nextReleaseTime == 0){
-            require(uint64(block.timestamp) >= uint64(start() + 1 minutes));
+            uint64 timestamp = uint64(block.timestamp);
+            uint64 releaseTime = uint64(start() + scheduleTime);
+            require(timestamp >= releaseTime, "TokenVesting: Wait for 1 minute, you'll be allowed to release more tokens");
         }
         require(uint64(block.timestamp)>=nextReleaseTime, "TokenVesting: After 1 minute you'll be allowed to release more tokens");
         _release(TokenAddress);
