@@ -25,7 +25,6 @@ contract("Vesting", accounts => {
         let wallet = await VestingWallet.deployed();
 
         let accountTokenBalance = (await token.balanceOf(accounts[0])).toString();
-        console.log(accountTokenBalance)
 
         await token.transfer(wallet.address, accountTokenBalance, { from: accounts[0] });
         let vestingTokenBalance = await token.balanceOf(wallet.address);
@@ -38,17 +37,34 @@ contract("Vesting", accounts => {
         assert.equal(parseInt(accountTokenBalance.toString()), total)
     })
     it("should allow owner to release token if all the right conditions are met", async() => {
-        let token = await Token.deployed();
         let wallet = await VestingWallet.deployed();
 
         await truffleAssert.reverts(wallet.release({ from: accounts[0] })) // wait for 1 minute
         await truffleAssert.reverts(wallet.release({ from: accounts[1] })) // user not owner
 
-        await timeTravel(60); // travel 1 minute ahead (works with ganache)
+        await timeTravel(57); // travel 1 minute ahead (works with ganache)
         await truffleAssert.passes(wallet.release({ from: accounts[0] }))
+    })
+    it("should ensure that the released amount per minute is accurate", async() => {
+        let token = await Token.deployed();
+        let wallet = await VestingWallet.deployed();
+
+        let tokenTotalSupply = 100000000
+        let releaseablePerMinute = tokenTotalSupply / (365 * 24 * 60) // Minimum releasable amount per minute
+
+        let tokenReleased = await wallet.released(token.address)
+        tokenReleased = Web3.utils.fromWei(tokenReleased.toString(), "ether")
+
+        assert(tokenReleased >= releaseablePerMinute) // considering that the release was made some seconds over a minute so it won't be exact.
+
+        let accountTokenBalance = (await token.balanceOf(accounts[0])).toString();
+        accountTokenBalance = Web3.utils.fromWei(accountTokenBalance.toString(), "ether")
+
+        assert(accountTokenBalance == tokenReleased / 10)
+
         await timeTravel(10); // travel 10 seconds
         await truffleAssert.reverts(wallet.release({ from: accounts[0] }))
-        await timeTravel(60); // travel 50 seconds to complete 1 minute
+        await timeTravel(50); // travel 50 seconds to complete 1 minute
         await truffleAssert.passes(wallet.release({ from: accounts[0] }))
     })
 })
