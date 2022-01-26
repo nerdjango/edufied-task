@@ -108,6 +108,18 @@ async function fetchAccountData() {
         return;
     }
 
+    if (token && vesting) {
+        vesting.events.ERC20Released().on("data", function(event) {
+                console.log(event)
+                let amount = event.returnValues.amount
+                amount = web3.utils.fromWei(amount, "ether");
+                amount = parseFloat(amount).toFixed(4);
+                $("#releasedEventEmitted").css("display", "block")
+                $("#releasedEventEmitted").text(`${amount} XYZ has been shared amongst the your vesting wallet beneficiaries!`)
+            })
+            .on("error", console.error)
+    }
+
     let tokenSymbol = await token.methods.symbol().call()
 
     let releasedTokens = await vesting.methods.released(tokenAddress).call()

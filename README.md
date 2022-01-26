@@ -13,7 +13,7 @@ Vesting Wallet: https://testnet.bscscan.com//address/0x4D71BE3B0C4b59f478Ee2cE4C
 ## Tech Stack
 Contracts: solidity, truffle, ganache
 
-Front End: Html, CSS, javascript, jQuery, web3.js, web3modal
+Front End: Html, CSS, javascript, Bootstrap, web3.js, web3modal
 
 Testing: mocha, chai, truffle-assertions
 
