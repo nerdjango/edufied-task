@@ -18,10 +18,13 @@
  *
  */
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+require('dotenv').config();
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
+
+const MNEMONIC = process.env.MNEMONIC; // generated with (npx mnemonics)
 
 module.exports = {
     /**
@@ -51,6 +54,15 @@ module.exports = {
             host: "127.0.0.1", // Localhost (default: none)
             port: 7545, // Standard Ganache port (default: none)
             network_id: "5777", // Ganache network
+        },
+        bscTestnet: {
+            provider: () => new HDWalletProvider(MNEMONIC, `https://data-seed-prebsc-2-s3.binance.org:8545/`),
+            network_id: 97,
+            gas: 5500000,
+            confirmations: 10,
+            timeoutBlocks: 200,
+            skipDryRun: true,
+            networkCheckTimeout: 10000000,
         },
         // Another network with more advanced options...
         // advanced: {

@@ -1,8 +1,8 @@
 "use strict";
 
 var user;
-var tokenAddress = "0xB42DdC8c45bBbAef6f93910662759e8a120caA23";
-var vestingAddress = "0x93d3c58cE02d3E675D929C3018dA76D19d6dAB31";
+var tokenAddress = "0x2F3DF634F29DFa994E05c936f29E419113c1b212";
+var vestingAddress = "0x4D71BE3B0C4b59f478Ee2cE4C0b3731ddFC80677";
 var accounts;
 var walletDisconnect;
 var tokenSymbol;
