@@ -44,8 +44,11 @@ function init() {
         walletconnect: {
             package: WalletConnectProvider,
             options: {
-                // Mikko's test key - don't copy as your mileage may vary
-                infuraId: "8043bb2cf99347b1bfadfb233c5325c0",
+                rpc: {
+                    97: "https://data-seed-prebsc-1-s1.binance.org:8545",
+                },
+                network: "binance",
+                chainId: 97,
             }
         }
     };
@@ -72,11 +75,18 @@ async function fetchAccountData() {
     // Get connected chain id from Ethereum node
     const chainId = await web3.eth.getChainId();
     // Load chain information over an HTTP API
+    let chainData
     try {
-        const chainData = evmChains.getChain(chainId);
+        chainData = evmChains.getChain(chainId);
         document.querySelector("#network-name").textContent = chainData.name;
     } catch (e) {
         document.querySelector("#network-name").textContent = "Development Blockchain";
+    }
+
+    if (chainId != 97) {
+        await alert(`You're currently connected to the ${chainData.name}. Please connect to the Binance Smart Chain Testnet to access full functionality of this dApp!`)
+        onDisconnect()
+        return;
     }
 
     // Get list of accounts of the connected wallet
