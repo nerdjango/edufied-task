@@ -1,0 +1,119 @@
+<html>
+
+<head>
+    <title>XYZ Token Vesting UI</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Get some bootstrap default styles -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- Construct a Bootstrap layout -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>XYZ Token Vesting Interaction UI</h1>
+
+                <p id="connect-alert">No wallet connected. Connect wallet to show accounts and their XYZ Token balances.</p>
+                <p id="connected-alert" style="display: none">Your wallet is connected to the vesting dApp. Check your Token balance</p>
+
+                <div id="prepare">
+                    <button class="btn btn-primary" id="btn-connect">
+              Connect wallet
+            </button>
+                </div>
+
+                <div id="connected" style="display: none">
+
+                    <button class="btn btn-primary" id="btn-disconnect">
+              Disconnect wallet
+            </button>
+
+                    <hr>
+
+                    <div id="network">
+                        <p>
+                            <strong>Connected blockchain:</strong> <span id="network-name"></span>
+                        </p>
+
+                        <p>
+                            <strong>Selected account:</strong> <span id="selected-account"></span>
+                        </p>
+
+                        <hr>
+
+                        <p>
+                            <strong>Total XYZ released:</strong> <span id="released-xyz"></span>
+                        </p>
+
+                        <p>
+                            <strong>Vesting Wallet Balance:</strong> <span id="vesting-wallet"></span>
+                        </p>
+
+                    </div>
+
+                    <hr>
+
+                    <h3>Connected account balance</h3>
+
+                    <table class="table table-listing">
+                        <thead>
+                            <th>Address</th>
+                            <th>XYZ balance</th>
+                        </thead>
+
+                        <tbody id="accounts">
+                        </tbody>
+                    </table>
+
+                    <div id="prepare">
+                        <button class="btn btn-primary" style="display: none" id="btn-release">
+                  Release XYZ Tokens
+                </button>
+                    </div>
+
+                    <br>
+                    <p>Please try to switch between different accounts in your wallet if your wallet supports this functonality.</p>
+
+                </div>
+
+                <br>
+
+                <div class="well">
+                    <p class="text-muted">XYZ Token Vesting dApp project made with &#10084; by <a href="https://twitter.com/nerdjango">@nerdjango</a></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- We use simple <template> templating for the example -->
+    <div id="templates" style="display: none">
+        <template id="template-balance">
+        <tr>
+          <th class="address"></th>
+          <td class="balance"></td>
+        </tr>
+      </template>
+    </div>
+
+    <script type="text/javascript" src="https://unpkg.com/web3@1.6.1/dist/web3.min.js"></script>
+    <script type="text/javascript" src="abi.js"></script>
+
+    <!--
+      Use unpkg CDN to load all NPM packages to vanilla Javascript - read more at http://unpkg.com
+      On your deployment, you properly either want to use a preprocessing tool like webpack
+      to include these files, or extract NPM archives and manually host the files inside.
+      TODO: Pin down all versions.
+    -->
+
+    <script type="text/javascript" src="https://unpkg.com/web3modal@1.9.4/dist/index.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/evm-chains@0.2.0/dist/umd/index.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/@walletconnect/web3-provider@1.7.0/dist/umd/index.min.js"></script>
+
+    <script type="text/javascript" src="connectionButton.js"></script>
+</body>
+
+</html>

@@ -26,8 +26,4 @@ contract TokenVesting is VestingWalletUpdated {
         _release(TokenAddress);
         nextReleaseTime = uint64(block.timestamp + scheduleTime);
     }
-
-    function getVestedAmount() external view returns(uint) {
-        return vestedAmount(TokenAddress, uint64(block.timestamp));
-    }
 }
