@@ -1,5 +1,7 @@
 "use strict";
 
+const isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+
 var user;
 var tokenAddress = "0x2F3DF634F29DFa994E05c936f29E419113c1b212";
 var vestingAddress = "0x4D71BE3B0C4b59f478Ee2cE4C0b3731ddFC80677";
@@ -47,7 +49,6 @@ function init() {
                 rpc: {
                     97: "https://data-seed-prebsc-1-s1.binance.org:8545",
                 },
-                network: "binance",
                 chainId: 97,
             }
         }
@@ -151,7 +152,15 @@ async function fetchAccountData() {
         const humanFriendlyBalance = parseFloat(xyzBalance).toFixed(4);
         // Fill in the templated row and put in the document
         const clone = template.content.cloneNode(true);
-        clone.querySelector(".address").textContent = address;
+        if (!isMobile) {
+            clone.querySelector(".address").textContent = address;
+        } else {
+            let firstPart = address.substring(0, 5)
+            let lastPart = address.substring(37)
+            let finalAddress = `${firstPart}...${lastPart}`
+            clone.querySelector(".address").textContent = finalAddress;
+        }
+
         clone.querySelector(".balance").textContent = `${humanFriendlyBalance} ${tokenSymbol}`;
         accountContainer.appendChild(clone);
     });
